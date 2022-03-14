@@ -157,7 +157,6 @@ export default defineComponent({
     let textarea = this.$refs.textarea;
     textarea &&
       textarea.addEventListener("scroll", (e) => {
-        console.log("scroll", e);
         this.$refs.shadow.scrollTop = textarea.scrollTop;
       });
   },
@@ -199,9 +198,7 @@ export default defineComponent({
 
   methods: {
     beforeinput(e) {
-      console.log(e);
       this.beforeSelection = this.getSelection();
-      console.log(this.beforeSelection, this.afterSelection)
       if(this.beforeSelection.end != this.afterSelection.end) {
           this.popup.visible = false
       }
@@ -209,12 +206,10 @@ export default defineComponent({
     input(e) {
       let textareaValue = e.target.value
       this.afterSelection = this.getSelection();
-       console.log('ouser111', this.oUsers[0])
       // 修改user 时 当成普通字符串
       this.oUsers = this.oUsers.filter(i => {
           return !((this.beforeSelection.end > i.start && this.beforeSelection.start < i.end )||  (i.start < this.beforeSelection.start && i.end> this.beforeSelection.end) )
       })
-       console.log('ouser222', this.oUsers[0])
       // 光标后面的user
       let afterUser = this.oUsers.filter(i =>i.start>this.beforeSelection.end)
       afterUser.forEach(i => {
@@ -274,7 +269,6 @@ export default defineComponent({
         let end = this.textareaValue.slice(this.afterSelection.start)
         let arr = [start, mid, end]
 
-        console.log(arr, this.popup.position)
         arr[1] = item.name
         this.textareaValue = arr.join('')
         let pos = this.popup.position + item.name.length + 1
